@@ -1,4 +1,8 @@
-# cities = [[1, 2], [3, 4], [8, 7], [10, 12], [2, 4]]
+# cities = [
+#  [[1, 2], [3, 4], [8, 7], [10, 12], [2, 4]],
+#  [[1, 2], [3, 4], [8, 7], [10, 12], [2, 4]],
+#  ...
+#]
 
 class TSP
 
@@ -6,17 +10,17 @@ class TSP
 
   def initialize(cities)
     @cities = cities
+    @combinations = cities.permutation.to_a
   end
 
-  def get_total
+  def get_total(combination)
     counter = 1
-    total = get_distance([0, 0], cities[0])
-    until counter == cities.length
-      p total
-      total += get_distance(cities[counter - 1], cities[counter])
+    total = get_distance([0, 0], combination[0])
+    until counter == combination.length
+      total += get_distance(combination[counter - 1], combination[counter])
       counter += 1
     end
-    total + get_distance([0,0], cities[-1])
+    total + get_distance([0,0], combination[-1])
   end
 
   def get_distance(point_a, point_b)
@@ -25,18 +29,16 @@ class TSP
     Math.hypot(x_diff, y_diff)
   end
 
-  def all_possible_route_configurations
-    # build a collection of all possible orders for given points
 
+  def route
+    @combinations.min_by do |route|
+      get_total(route)
+    end
   end
 
-  def find_best_route
-    # map over collection of possible routes with the get total distance function.
-    # return shortest distance.
+  def dist
+    get_total(route)
   end
 end
 
-cities = [[1, 2], [3, 4], [8, 7], [10, 12], [2, 4]]
 
-tsp = TSP.new(cities)
-p tsp.get_total
