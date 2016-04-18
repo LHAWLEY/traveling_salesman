@@ -12,7 +12,6 @@ class TSP
     counter = 1
     total = get_distance([0, 0], cities[0])
     until counter == cities.length
-      p total
       total += get_distance(cities[counter - 1], cities[counter])
       counter += 1
     end
@@ -25,18 +24,23 @@ class TSP
     Math.hypot(x_diff, y_diff)
   end
 
-  def all_possible_route_configurations
-    # build a collection of all possible orders for given points
-
-  end
-
   def find_best_route
     # map over collection of possible routes with the get total distance function.
     # return shortest distance.
   end
 end
 
+class Array
+
+  def all_possible_route_configurations
+    # build a collection of all possible orders for given points
+    routes = self.repeated_combination(self.length).to_a
+    return routes
+  end
+end
+
 cities = [[1, 2], [3, 4], [8, 7], [10, 12], [2, 4]]
 
 tsp = TSP.new(cities)
+p cities.all_possible_route_configurations
 p tsp.get_total
