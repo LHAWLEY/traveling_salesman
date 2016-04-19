@@ -34,7 +34,8 @@ class Array
 
   def all_possible_route_configurations
     # build a collection of all possible orders for given points
-    routes = self.repeated_combination(self.length).to_a
+    # routes = self.repeated_combination(self.length).to_a
+    routes = self.repeated_permutation(self.length).to_a
     return routes
   end
 end
